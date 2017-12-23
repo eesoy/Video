@@ -7,19 +7,33 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func playVideo (url: URL){
+        let playerVC = AVPlayerViewController()
+        playerVC.player = AVPlayer(url: url)
+        present(playerVC, animated: true, completion: {
+            print("AVPlayerViewController재생 시작")
+            playerVC.player?.play()
+        })
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func playLocalClicked(_ sender: UIButton) {
+        if let path = Bundle.main.path(forResource: "FastTyping", ofType: "mp4") {
+            playVideo(url: URL(fileURLWithPath: path))
+        }
     }
-
-
+    
+    @IBAction func playLinkCilcked(_ sender: UIButton) {
+        playVideo(url: URL(string: "http://www.ithinknext.com/mydata/board/files/F201308021823010.mp4")!)
+    }
+    
 }
 
